@@ -90,16 +90,20 @@ export default function HomeScreen(props) {
               const getData = async () => {
                 const language = await AsyncStorage.getItem("language");
                 console.log("language is >>>>>>>>>>>>>", language);
-                // const resp = await axios.get(
-                //   `${BACKEND}/post/NextTenPost/${language}/${getMorePostCounter}`
-                // );
-                const resp = await axios.get(`${BACKEND}/filter/ALL`);
+                const resp = await axios.get(
+                  `${BACKEND}/post/NextTenPost/${language}/${getMorePostCounter}`
+                );
+                // const resp = await axios.get(`${BACKEND}/filter/ALL`);
                 const datad = await resp.data;
                 setFeed(datad.posts.reverse());
-                const ArticleData = await axios.get(
-                  `${BACKEND}/filter/ARTICLE`
+                setArticle(
+                  datad.posts.filter((post) => post.type == "ARTICLE")
                 );
-                setArticle(ArticleData.data.posts.reverse());
+
+                // const ArticleData = await axios.get(
+                //   `${BACKEND}/filter/ARTICLE`
+                // );
+                // setArticle(ArticleData.data.posts.reverse());
                 const MemeData = await axios.get(`${BACKEND}/filter/MEME`);
                 setMeme(MemeData.data.posts.reverse());
                 const QuoteData = await axios.get(`${BACKEND}/filter/QUOTE`);
